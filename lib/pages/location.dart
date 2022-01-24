@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/material/dropdown.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class LocationPage extends StatefulWidget {
   @override
@@ -7,8 +8,9 @@ class LocationPage extends StatefulWidget {
 }
 
 class _LocationPageState extends State<LocationPage> {
+  TextEditingController controller = TextEditingController();
   var locationImage = 'assets/images/illustration.png';
-  String dropDownValue = ' Adabor';
+  String dropDownValue = 'Adabor';
   final dropDownItemList = [
     'Adabor',
     'Badda',
@@ -20,6 +22,11 @@ class _LocationPageState extends State<LocationPage> {
     'Demra',
     'Dhanmondi',
   ];
+
+  DropdownMenuItem<String> menufunction(String item) => DropdownMenuItem(
+        value: item,
+        child: Text(item),
+      );
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,42 +90,66 @@ class _LocationPageState extends State<LocationPage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                // DropdownButton(
-                //   value: dropDownValue,
-                //   items: dropDownItemList
-                //       .map<DropdownMenuItem<String>>((String value) {
-                //     return DropdownMenuItem<String>(
-                //         value: value, child: Text(''));
-                //   }).toList(),
-                //   onChanged: (String? newValue) {
-                //     setState(() {
-                //       dropDownValue = newValue.toString();
-                //     });
-                //   },
-                // ),
-
                 DropdownButton(
-                    value: dropDownValue,
-                    items: dropDownItemList.map((String item) {
-                      return DropdownMenuItem<String>(
-                        value: item,
-                        child: Text(item),
-                      );
-                    }).toList(),
-                    selectedItemBuilder: (context) {
-                      return dropDownItemList.map<Widget>((String item) {
-                        return Text(item);
-                      }).toList();
-                    },
-                    onChanged: (String? string) => dropDownValue = string!),
-
+                  isExpanded: true,
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xff818995),
+                  ),
+                  value: dropDownValue,
+                  style: TextStyle(color: Color(0xff181725), fontSize: 18),
+                  items: dropDownItemList
+                      .map((String e) =>
+                          DropdownMenuItem<String>(value: e, child: Text(e)))
+                      .toList(),
+                  onChanged: (ValueKey) =>
+                      controller.text = ValueKey.toString(),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text(
+                  'Your Area',
+                  style: TextStyle(
+                    color: Color(
+                      0xff7C7C7C,
+                    ),
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                DropdownButton(
+                  isExpanded: true,
+                  icon: Icon(
+                    Icons.keyboard_arrow_down,
+                    color: Color(0xff818995),
+                  ),
+                  hint: Text(
+                    'Types of your area',
+                    style: TextStyle(color: Color(0xffB1B1B1), fontSize: 18),
+                  ),
+                  items: dropDownItemList
+                      .map(
+                        (String e) => DropdownMenuItem<String>(
+                          value: e,
+                          child: Text(e),
+                        ),
+                      )
+                      .toList(),
+                  onChanged: (ValueKey) =>
+                      controller.text = ValueKey.toString(),
+                ),
+                SizedBox(
+                  height: 50,
+                ),
                 ElevatedButton(
                   style: ButtonStyle(
-                    fixedSize: MaterialStateProperty.all(Size(360, 60)),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Color(0xff53B175),
-                    ),
-                  ),
+                      fixedSize: MaterialStateProperty.all(Size(360, 60)),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Color(0xff53B175),
+                      ),
+                      shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(19)))),
                   onPressed: () {},
                   child: Text(
                     'Submit',
